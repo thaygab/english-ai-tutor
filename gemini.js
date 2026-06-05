@@ -5,6 +5,11 @@ window.historico =
 
 async function perguntarIA(pergunta, nivel) {
 
+    const conteudoSeguro =
+    window.historico.length > 0
+        ? window.historico
+        : [];
+
     window.historico.push({
         role: "user",
         parts: [
