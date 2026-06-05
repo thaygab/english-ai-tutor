@@ -94,25 +94,19 @@ localStorage.setItem(
     chat.scrollTop = chat.scrollHeight;
 }
 
-window.limparConversa = function () {
+window.conversas[window.chatAtual] = [];
 
-    console.log("clicou em limpar");
+localStorage.setItem("conversas", JSON.stringify(window.conversas));
 
-    window.historico = [];
-    localStorage.removeItem("historico");
-    localStorage.removeItem("chatHTML");
+const chat = document.getElementById("chat");
 
-    const chat = document.getElementById("chat");
-
-    if (chat) {
-        chat.innerHTML = `
-            <div class="mensagem tutor">
-                👋 Nova conversa iniciada!
-            </div>
-        `;
-    }
-};
-
+if (chat) {
+    chat.innerHTML = `
+        <div class="mensagem tutor">
+            👋 Conversa limpa!
+        </div>
+    `;
+}
 window.novaConversa = function () {
 
     const id = "chat_" + Date.now();
