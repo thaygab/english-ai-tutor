@@ -10,6 +10,20 @@ async function enviarPergunta() {
     input.disabled = true;
     const pergunta = input.value.trim();
     const chat = document.getElementById("chat");
+  function mostrarLoading() {
+    const chat = document.getElementById("chat");
+
+    const div = document.createElement("div");
+    div.id = "loading";
+    div.innerText = "IA está digitando...";
+
+    chat.appendChild(div);
+}
+
+function removerLoading() {
+    const loading = document.getElementById("loading");
+    if (loading) loading.remove();
+}
 
     if (!pergunta) return;
 
