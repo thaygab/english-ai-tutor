@@ -1,15 +1,9 @@
 window.historico =
-    JSON.parse(
-        localStorage.getItem("historico")
-    ) || [];
+    JSON.parse(localStorage.getItem("historico")) || [];
 
 async function perguntarIA(pergunta, nivel) {
 
-    const conteudoSeguro =
-    window.historico.length > 0
-        ? window.historico
-        : [];
-
+    // adiciona pergunta do usuário no histórico
     window.historico.push({
         role: "user",
         parts: [
@@ -24,6 +18,7 @@ async function perguntarIA(pergunta, nivel) {
         JSON.stringify(window.historico)
     );
 
+    // prompt base + histórico
     const conteudo = [
         {
             role: "user",
@@ -38,26 +33,12 @@ Regras:
 - Use emojis moderadamente.
 - Organize bem a resposta.
 - NÃO use Markdown, asteriscos ou hashtags.
-- Coloque sempre a pronuncia em ingles, exemplo de formatação:
+- Sempre inclua pronúncia em inglês.
 
-Em inglês: She'd lied to you, lied to me
-Pronúncia: Xid láid tu iu, láid tu mi
-Tradução: Ela mentiu para você, mentiu para mim
-
-Adapte ao nível do aluno:
-
-Iniciante:
-- frases simples
-- vocabulário básico
-- explicações em português
-
-Intermediário:
-- frases médias
-- mais vocabulário
-
-Avançado:
-- frases naturais
-- menos explicação em português
+Exemplo:
+Em inglês: She'd lied to you
+Pronúncia: Xid láid tu iu
+Tradução: Ela mentiu para você
 
 Nível atual do aluno: ${nivel}
 `
@@ -67,31 +48,29 @@ Nível atual do aluno: ${nivel}
         ...window.historico
     ];
 
-  const resposta = await fetch(
-    "https://english-ai-tutor-i0tv.onrender.com/perguntar",
-    {
-        body: JSON.stringify({
-    conteudo: conteudoSeguro
-})
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            conteudo
-        })
-    }
-);
+    // chamada API (CORRETO - sem duplicação de body)
+    const resposta = await fetch(
+        "https://english-ai-tutor-i0tv.onrender.com/perguntar",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                conteudo
+            })
+        }
+    );
+
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-        throw new Error(
-            dados.erro || "Erro no servidor"
-        );
+        throw new Error(dados.erro || "Erro no servidor");
     }
 
     const textoResposta = dados.resposta;
 
+    // adiciona resposta da IA no histórico
     window.historico.push({
         role: "model",
         parts: [
@@ -107,4 +86,22 @@ Nível atual do aluno: ${nivel}
     );
 
     return textoResposta;
+}
+
+// função global para o botão funcionar
+window.limparConversa = function () {
+    window.historico = [];
+    localStorage.removeItem("historico");
+    localStorage.removeItem("chatHTML");
+
+    const chat = document.getElementById("chat");
+
+    if (chat) {
+        chat.innerHTML = `
+            <div class="mensagem tutor">
+                👋 Nova conversa iniciada!
+            </div>
+        `;
+    }
+};
 }
