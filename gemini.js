@@ -1,30 +1,28 @@
-window.historico =
-    JSON.parse(localStorage.getItem("historico")) || [];
-
 async function perguntarIA(pergunta, nivel) {
-
-    window.historico.push({
-        role: "user",
-        parts: [{ text: `Nível: ${nivel}\nPergunta: ${pergunta}` }]
+    // Busca o histórico específico da conversa atual para enviar à IA
+    const conversaAtual = window.conversas[window.chatAtual] || [];
+    
+    // Mapeia o histórico do script.js para o formato que a sua API (Gemini) espera
+    const historicoFormatado = conversaAtual.map(msg => {
+        return {
+            role: msg.role === "user" ? "user" : "model",
+            parts: [{ text: msg.text }]
+        };
     });
 
+    // Monta o prompt do sistema combinado com a pergunta atual
     const conteudo = [
         {
             role: "user",
             parts: [{
-                text: `
-Você é um tutor de inglês para brasileiros.
-
-Regras:
-- Responda em português
-- Seja didático e amigável
-- Inclua pronúncia
-
-Nível: ${nivel}
-`
+                text: `Você é um tutor de inglês para brasileiros.\n\nRegras:\n- Responda em português\n- Seja didático e amigável\n- Inclua pronúncia\n\nNível atual do aluno: ${nivel}`
             }]
         },
-        ...window.historico
+        ...historicoFormatado,
+        {
+            role: "user",
+            parts: [{ text: `Nível: ${nivel}\nPergunta: ${pergunta}` }]
+        }
     ];
 
     const resposta = await fetch(
@@ -42,14 +40,5 @@ Nível: ${nivel}
         throw new Error(dados.erro || "Erro no servidor");
     }
 
-    const texto = dados.resposta;
-
-    window.historico.push({
-        role: "model",
-        parts: [{ text: texto }]
-    });
-
-    localStorage.setItem("historico", JSON.stringify(window.historico));
-
-    return texto;
+    return dados.resposta;
 }
