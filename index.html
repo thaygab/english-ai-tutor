@@ -40,30 +40,18 @@
 
     </div>
 
-    <div class="input-area">
-<select id="nivel">
-    <option value="Iniciante">🟢 Iniciante</option>
-    <option value="Intermediário">🟡 Intermediário</option>
-    <option value="Avançado">🔴 Avançado</option>
-</select>
-        <textarea
-            id="prompt"
-            placeholder="Digite um tema..."
-        ></textarea>
+ <div class="input-area">
+    <select id="nivel">
+        <option value="Iniciante">🟢 Iniciante</option>
+        <option value="Intermediário">🟡 Intermediário</option>
+        <option value="Avançado">🔴 Avançado</option>
+    </select>
+    <textarea id="prompt" placeholder="Digite um tema..."></textarea>
 
-        <button id="btnEnviar" onclick="enviarPergunta()">
-            Enviar
-        </button>
-
-       <button id="novaConversa">
-       🔄 Nova Conversa
-        </button>
-
-        <button onclick="limparConversa()">
-        Limpar conversa
-         </button>
-
-    </div>
+    <button id="btnEnviar" onclick="enviarPergunta()">Enviar</button>
+    <button id="novaConversa" onclick="novaConversa()">🔄 Nova Conversa</button>
+    <button onclick="limparConversa()">Limpar conversa</button>
+</div>
         
         <div id="sidebar">
     <button onclick="novaConversa()">+ Nova conversa</button>
