@@ -89,3 +89,18 @@ window.limparConversa = function () {
         `;
     }
 };
+window.addEventListener("DOMContentLoaded", () => {
+
+    const chat = document.getElementById("chat");
+
+    const chatSalvo = localStorage.getItem("chatHTML");
+    const historicoSalvo = localStorage.getItem("historico");
+
+    if (historicoSalvo) {
+        window.historico = JSON.parse(historicoSalvo);
+    }
+
+    if (chatSalvo && chat) {
+        chat.innerHTML = chatSalvo;
+    }
+});
