@@ -1,53 +1,34 @@
 let carregando = false;
+
 async function enviarPergunta() {
 
-  if (carregando) return;
-
+    if (carregando) return;
     carregando = true;
 
     const nivel = document.getElementById("nivel").value;
     const input = document.getElementById("prompt");
-    input.disabled = true;
-    const pergunta = input.value.trim();
     const chat = document.getElementById("chat");
-  function mostrarLoading() {
-    const chat = document.getElementById("chat");
-
-    const div = document.createElement("div");
-    div.id = "loading";
-    div.innerText = "IA está digitando...";
-
-    chat.appendChild(div);
-}
-
-function removerLoading() {
-    const loading = document.getElementById("loading");
-    if (loading) loading.remove();
-}
-
-    if (!pergunta) return;
-
     const botao = document.getElementById("btnEnviar");
+
+    const pergunta = input.value.trim();
+
+    if (!pergunta) {
+        carregando = false;
+        return;
+    }
+
+    input.disabled = true;
     botao.disabled = true;
 
     chat.innerHTML += `
-        <div class="mensagem usuario">
-            ${pergunta}
-        </div>
+        <div class="mensagem usuario">${pergunta}</div>
     `;
-
-    localStorage.setItem(
-        "chatHTML",
-        chat.innerHTML
-    );
 
     input.value = "";
 
     const digitando = document.createElement("div");
-
     digitando.className = "mensagem tutor";
     digitando.innerHTML = "⌨️ Tutor está pensando...";
-
     chat.appendChild(digitando);
 
     chat.scrollTop = chat.scrollHeight;
@@ -56,7 +37,7 @@ function removerLoading() {
 
         const respostaIA = await perguntarIA(pergunta, nivel);
 
-        let respostaFormatada = respostaIA
+        const respostaFormatada = respostaIA
             .replace(/#{1,6}\s?/g, "")
             .replace(/\*\*/g, "")
             .replace(/\*/g, "")
@@ -70,10 +51,7 @@ function removerLoading() {
             </div>
         `;
 
-        localStorage.setItem(
-            "chatHTML",
-            chat.innerHTML
-        );
+        localStorage.setItem("chatHTML", chat.innerHTML);
 
     } catch (erro) {
 
@@ -81,7 +59,7 @@ function removerLoading() {
 
         chat.innerHTML += `
             <div class="mensagem tutor">
-                ❌ Erro ao consultar o Gemini.
+                ❌ Erro ao consultar a IA.
             </div>
         `;
 
@@ -90,60 +68,9 @@ function removerLoading() {
     } finally {
 
         botao.disabled = false;
-        carregando = false;
         input.disabled = false;
-
+        carregando = false;
     }
 
     chat.scrollTop = chat.scrollHeight;
-}
-
-document
-.getElementById("prompt")
-.addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter" && !event.shiftKey) {
-
-        event.preventDefault();
-
-        enviarPergunta();
-
-    }
-
-});
-
-document
-.getElementById("novaConversa")
-.addEventListener("click", () => {
-
-    window.historico.length = 0;
-
-    localStorage.removeItem("chatHTML");
-    localStorage.removeItem("historico");
-
-    document.getElementById("chat").innerHTML = `
-        <div class="mensagem tutor">
-            👋 Nova conversa iniciada!
-
-            <br><br>
-
-            Escolha um tema ou faça uma pergunta em inglês.
-        </div>
-    `;
-
-});
-
-const chatSalvo = localStorage.getItem("chatHTML");
-
-if (chatSalvo) {
-
-    document.getElementById("chat").innerHTML = chatSalvo;
-
-}
-function limparConversa() {
-    window.historico = [];
-    localStorage.removeItem("historico");
-
-    const chat = document.getElementById("chat");
-    if (chat) chat.innerHTML = "";
 }
