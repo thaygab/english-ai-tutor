@@ -12,21 +12,7 @@ async function enviarPergunta() {
     if (carregando) return;
     carregando = true;
 
-    if (!window.conversas[window.chatAtual]) {
-    window.conversas[window.chatAtual] = [];
-}
-
-    const nivel = document.getElementById("nivel").value;
-    const input = document.getElementById("prompt");
-    const chat = document.getElementById("chat");
-    const botao = document.getElementById("btnEnviar");
-
-    const pergunta = input.value.trim();
-
-    if (!pergunta) {
-        carregando = false;
-        return;
-    }
+        if (!window.conversas[window.chatAtual]) {
 
     input.disabled = true;
     botao.disabled = true;
@@ -93,7 +79,22 @@ localStorage.setItem(
 
     chat.scrollTop = chat.scrollHeight;
 }
+  window.limparConversa = function () {
 
+    window.conversas[window.chatAtual] = [];
+
+    localStorage.setItem("conversas", JSON.stringify(window.conversas));
+
+    const chat = document.getElementById("chat");
+
+    chat.innerHTML = `
+        <div class="mensagem tutor">
+            👋 Conversa limpa!
+        </div>
+    `;
+};
+
+    
 window.conversas[window.chatAtual] = [];
 
 localStorage.setItem("conversas", JSON.stringify(window.conversas));
