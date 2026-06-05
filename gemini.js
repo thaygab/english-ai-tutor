@@ -104,4 +104,4 @@ window.limparConversa = function () {
         `;
     }
 };
-}
+
