@@ -157,7 +157,15 @@ function renderizarConversas() {
 
             const chat = document.getElementById("chat");
 
-            chat.innerHTML = window.conversas[id].map(item => item.html).join("")
+           chat.innerHTML = window.conversas[id].map(msg => {
+
+    if (msg.role === "user") {
+        return `<div class="mensagem usuario">${msg.text}</div>`;
+    }
+
+    return `<div class="mensagem tutor">${msg.text}</div>`;
+
+}).join("");
                 || `
                 <div class="mensagem tutor">
                     👋 Conversa carregada
