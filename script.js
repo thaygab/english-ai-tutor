@@ -126,3 +126,10 @@ if (chatSalvo) {
     document.getElementById("chat").innerHTML = chatSalvo;
 
 }
+function limparConversa() {
+    window.historico = [];
+    localStorage.removeItem("historico");
+
+    const chat = document.getElementById("chat");
+    if (chat) chat.innerHTML = "";
+}
