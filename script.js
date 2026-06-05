@@ -1,25 +1,29 @@
-window.conversas = JSON.parse(localStorage.getItem("conversas")) || {};
-window.chatAtual = localStorage.getItem("chatAtual") || "default";
+window.conversas =
+    JSON.parse(localStorage.getItem("conversas")) || {};
 
-if (!window.conversas["default"]) {
-    window.conversas["default"] = [];
+window.chatAtual =
+    localStorage.getItem("chatAtual") || "default";
+
+if (!window.conversas[window.chatAtual]) {
+    window.conversas[window.chatAtual] = [];
 }
 
 let carregando = false;
 
-// 🔵 ENVIAR PERGUNTA
+// =======================
+// ENVIAR MENSAGEM
+// =======================
 async function enviarPergunta() {
 
     if (carregando) return;
     carregando = true;
 
-    const nivel = document.getElementById("nivel").value;
     const input = document.getElementById("prompt");
     const chat = document.getElementById("chat");
     const botao = document.getElementById("btnEnviar");
+    const nivel = document.getElementById("nivel").value;
 
     const pergunta = input.value.trim();
-
     if (!pergunta) {
         carregando = false;
         return;
@@ -40,27 +44,17 @@ async function enviarPergunta() {
 
     const digitando = document.createElement("div");
     digitando.className = "mensagem tutor";
-    digitando.innerHTML = "⌨️ Tutor está pensando...";
+    digitando.innerText = "⌨️ Tutor está pensando...";
     chat.appendChild(digitando);
-
-    chat.scrollTop = chat.scrollHeight;
 
     try {
 
-        const respostaIA = await perguntarIA(pergunta, nivel);
-
-        const respostaFormatada = respostaIA
-            .replace(/#{1,6}\s?/g, "")
-            .replace(/\*\*/g, "")
-            .replace(/\*/g, "")
-            .replace(/---/g, "");
+        const resposta = await perguntarIA(pergunta, nivel);
 
         digitando.remove();
 
         chat.innerHTML += `
-            <div class="mensagem tutor">
-                ${respostaFormatada.replace(/\n/g, "<br>")}
-            </div>
+            <div class="mensagem tutor">${resposta.replace(/\n/g, "<br>")}</div>
         `;
 
         window.conversas[window.chatAtual].push({
@@ -70,52 +64,32 @@ async function enviarPergunta() {
 
         window.conversas[window.chatAtual].push({
             role: "assistant",
-            text: respostaFormatada
+            text: resposta
         });
 
         localStorage.setItem("conversas", JSON.stringify(window.conversas));
-        localStorage.setItem("chatAtual", window.chatAtual);
+
+        renderizarConversas();
 
     } catch (erro) {
-
         digitando.remove();
 
         chat.innerHTML += `
-            <div class="mensagem tutor">
-                ❌ Erro ao consultar a IA.
-            </div>
+            <div class="mensagem tutor">❌ Erro ao consultar IA</div>
         `;
-
         console.error(erro);
 
     } finally {
-
         botao.disabled = false;
         input.disabled = false;
         carregando = false;
     }
-
-    chat.scrollTop = chat.scrollHeight;
 }
 
-// 🔵 LIMPAR CONVERSA ATUAL
-window.limparConversa = function () {
-
-    window.conversas[window.chatAtual] = [];
-
-    localStorage.setItem("conversas", JSON.stringify(window.conversas));
-
-    const chat = document.getElementById("chat");
-
-    chat.innerHTML = `
-        <div class="mensagem tutor">
-            👋 Conversa limpa!
-        </div>
-    `;
-};
-
-// 🔵 NOVA CONVERSA
-window.novaConversa = function () {
+// =======================
+// NOVA CONVERSA
+// =======================
+function novaConversa() {
 
     const id = "chat_" + Date.now();
 
@@ -126,15 +100,32 @@ window.novaConversa = function () {
     localStorage.setItem("chatAtual", window.chatAtual);
 
     const chat = document.getElementById("chat");
+    chat.innerHTML = `<div class="mensagem tutor">👋 Nova conversa criada!</div>`;
+
+    renderizarConversas();
+}
+
+// =======================
+// LIMPAR CONVERSA ATUAL
+// =======================
+function limparConversa() {
+
+    window.conversas[window.chatAtual] = [];
+
+    localStorage.setItem("conversas", JSON.stringify(window.conversas));
+
+    const chat = document.getElementById("chat");
 
     chat.innerHTML = `
-        <div class="mensagem tutor">
-            👋 Nova conversa criada!
-        </div>
+        <div class="mensagem tutor">👋 Conversa limpa!</div>
     `;
-};
 
-// 🔵 RENDERIZAR SIDEBAR
+    renderizarConversas();
+}
+
+// =======================
+// RENDER SIDEBAR
+// =======================
 function renderizarConversas() {
 
     const lista = document.getElementById("listaConversas");
@@ -142,49 +133,40 @@ function renderizarConversas() {
 
     lista.innerHTML = "";
 
-    Object.keys(window.conversas).forEach((id) => {
+    Object.keys(window.conversas).forEach(id => {
 
         const btn = document.createElement("button");
 
-        btn.innerText = id === "default"
-            ? "Conversa inicial"
-            : id.replace("chat_", "Conversa ");
-
-        btn.style.display = "block";
-        btn.style.margin = "5px 0";
-        btn.style.width = "100%";
+        btn.innerText =
+            id === "default"
+                ? "Conversa inicial"
+                : "Conversa " + id.slice(-4);
 
         btn.onclick = () => {
 
             window.chatAtual = id;
-
-            localStorage.setItem("chatAtual", window.chatAtual);
+            localStorage.setItem("chatAtual", id);
 
             const chat = document.getElementById("chat");
 
-            chat.innerHTML =
-                window.conversas[id].length > 0
-                    ? window.conversas[id].map(msg => {
-
-                        if (msg.role === "user") {
-                            return `<div class="mensagem usuario">${msg.text}</div>`;
-                        }
-
-                        return `<div class="mensagem tutor">${msg.text}</div>`;
-
-                    }).join("")
-                    : `
-                    <div class="mensagem tutor">
-                        👋 Conversa carregada
-                    </div>
+            chat.innerHTML = window.conversas[id]
+                .map(msg => {
+                    return `
+                        <div class="mensagem ${msg.role === "user" ? "usuario" : "tutor"}">
+                            ${msg.text}
+                        </div>
                     `;
+                })
+                .join("");
         };
 
         lista.appendChild(btn);
     });
 }
 
-// 🔵 INICIALIZAÇÃO
+// =======================
+// INICIALIZAÇÃO
+// =======================
 window.addEventListener("DOMContentLoaded", () => {
 
     renderizarConversas();
@@ -192,24 +174,12 @@ window.addEventListener("DOMContentLoaded", () => {
     const chat = document.getElementById("chat");
 
     if (window.conversas[window.chatAtual]?.length > 0) {
-
         chat.innerHTML = window.conversas[window.chatAtual]
-            .map(msg => {
-
-                if (msg.role === "user") {
-                    return `<div class="mensagem usuario">${msg.text}</div>`;
-                }
-
-                return `<div class="mensagem tutor">${msg.text}</div>`;
-            })
+            .map(msg => `
+                <div class="mensagem ${msg.role === "user" ? "usuario" : "tutor"}">
+                    ${msg.text}
+                </div>
+            `)
             .join("");
-
-    } else {
-
-        chat.innerHTML = `
-            <div class="mensagem tutor">
-                👋 Nova conversa iniciada!
-            </div>
-        `;
     }
 });
