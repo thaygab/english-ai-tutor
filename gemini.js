@@ -70,6 +70,9 @@ Nível atual do aluno: ${nivel}
   const resposta = await fetch(
     "https://english-ai-tutor-i0tv.onrender.com/perguntar",
     {
+        body: JSON.stringify({
+    conteudo: conteudoSeguro
+})
         method: "POST",
         headers: {
             "Content-Type": "application/json"
