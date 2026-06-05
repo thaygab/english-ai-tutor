@@ -10,7 +10,7 @@ let carregando = false;
 // 🔵 ENVIAR PERGUNTA
 async function enviarPergunta() {
 
-    if (carregando) return;
+    if (carregando) return;    
     carregando = true;
 
     const nivel = document.getElementById("nivel").value;
@@ -166,7 +166,8 @@ function renderizarConversas() {
     return `<div class="mensagem tutor">${msg.text}</div>`;
 
 }).join("");
-                || `
+:`
+               
                 <div class="mensagem tutor">
                     👋 Conversa carregada
                 </div>
