@@ -12,6 +12,10 @@ async function enviarPergunta() {
     if (carregando) return;
     carregando = true;
 
+    if (!window.conversas[window.chatAtual]) {
+    window.conversas[window.chatAtual] = [];
+}
+
     const nivel = document.getElementById("nivel").value;
     const input = document.getElementById("prompt");
     const chat = document.getElementById("chat");
