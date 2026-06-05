@@ -63,7 +63,11 @@ Nível atual do aluno: ${nivel}
     ];
 
     const resposta = await fetch(
+<<<<<<< HEAD
         "https://english-ai-tutor-i0tv.onrender.com",
+=======
+        "https://english-ai-tutor-i0tv.onrender.com/perguntar",
+
         {
             method: "POST",
             headers: {
