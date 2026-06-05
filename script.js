@@ -7,12 +7,27 @@ if (!window.conversas["default"]) {
 
 let carregando = false;
 
+// 🔵 ENVIAR PERGUNTA
 async function enviarPergunta() {
 
     if (carregando) return;
     carregando = true;
 
-        if (!window.conversas[window.chatAtual]) {
+    const nivel = document.getElementById("nivel").value;
+    const input = document.getElementById("prompt");
+    const chat = document.getElementById("chat");
+    const botao = document.getElementById("btnEnviar");
+
+    const pergunta = input.value.trim();
+
+    if (!pergunta) {
+        carregando = false;
+        return;
+    }
+
+    if (!window.conversas[window.chatAtual]) {
+        window.conversas[window.chatAtual] = [];
+    }
 
     input.disabled = true;
     botao.disabled = true;
@@ -31,7 +46,7 @@ async function enviarPergunta() {
     chat.scrollTop = chat.scrollHeight;
 
     try {
-            
+
         const respostaIA = await perguntarIA(pergunta, nivel);
 
         const respostaFormatada = respostaIA
@@ -48,15 +63,12 @@ async function enviarPergunta() {
             </div>
         `;
 
-      window.conversas[window.chatAtual].push({
-    role: "ui",
-    html: chat.innerHTML
-});
+        window.conversas[window.chatAtual].push({
+            role: "ui",
+            html: chat.innerHTML
+        });
 
-localStorage.setItem(
-    "conversas",
-    JSON.stringify(window.conversas)
-);
+        localStorage.setItem("conversas", JSON.stringify(window.conversas));
 
     } catch (erro) {
 
@@ -79,7 +91,9 @@ localStorage.setItem(
 
     chat.scrollTop = chat.scrollHeight;
 }
-  window.limparConversa = function () {
+
+// 🔵 LIMPAR CONVERSA ATUAL
+window.limparConversa = function () {
 
     window.conversas[window.chatAtual] = [];
 
@@ -94,20 +108,7 @@ localStorage.setItem(
     `;
 };
 
-    
-window.conversas[window.chatAtual] = [];
-
-localStorage.setItem("conversas", JSON.stringify(window.conversas));
-
-const chat = document.getElementById("chat");
-
-if (chat) {
-    chat.innerHTML = `
-        <div class="mensagem tutor">
-            👋 Conversa limpa!
-        </div>
-    `;
-}
+// 🔵 NOVA CONVERSA
 window.novaConversa = function () {
 
     const id = "chat_" + Date.now();
@@ -127,22 +128,7 @@ window.novaConversa = function () {
     `;
 };
 
-window.addEventListener("DOMContentLoaded", () => {
-
-    const chat = document.getElementById("chat");
-
-    const chatSalvo = localStorage.getItem("chatHTML");
-    const historicoSalvo = localStorage.getItem("historico");
-
-    if (historicoSalvo) {
-        window.historico = JSON.parse(historicoSalvo);
-    }
-
-    if (chatSalvo && chat) {
-        chat.innerHTML = chatSalvo;
-    }
-});
-
+// 🔵 RENDERIZAR SIDEBAR
 function renderizarConversas() {
 
     const lista = document.getElementById("listaConversas");
@@ -168,7 +154,8 @@ function renderizarConversas() {
 
             const chat = document.getElementById("chat");
 
-            chat.innerHTML = localStorage.getItem("chat_" + id) || `
+            chat.innerHTML = window.conversas[id].map(item => item.html).join("")
+                || `
                 <div class="mensagem tutor">
                     👋 Conversa carregada
                 </div>
@@ -178,3 +165,17 @@ function renderizarConversas() {
         lista.appendChild(btn);
     });
 }
+
+// 🔵 INICIALIZAÇÃO
+window.addEventListener("DOMContentLoaded", () => {
+
+    renderizarConversas();
+
+    const chat = document.getElementById("chat");
+
+    if (window.conversas[window.chatAtual]?.length > 0) {
+        chat.innerHTML = window.conversas[window.chatAtual]
+            .map(item => item.html)
+            .join("");
+    }
+});
