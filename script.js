@@ -74,3 +74,18 @@ async function enviarPergunta() {
 
     chat.scrollTop = chat.scrollHeight;
 }
+
+window.limparConversa = function () {
+    window.historico = [];
+    localStorage.removeItem("historico");
+    localStorage.removeItem("chatHTML");
+
+    const chat = document.getElementById("chat");
+    if (chat) {
+        chat.innerHTML = `
+            <div class="mensagem tutor">
+                👋 Nova conversa iniciada!
+            </div>
+        `;
+    }
+};
