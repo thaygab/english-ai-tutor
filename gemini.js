@@ -62,23 +62,18 @@ Nível atual do aluno: ${nivel}
         ...window.historico
     ];
 
-    const resposta = await fetch(
-<<<<<<< HEAD
-        "https://english-ai-tutor-i0tv.onrender.com",
-=======
-        "https://english-ai-tutor-i0tv.onrender.com/perguntar",
-
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                conteudo
-            })
-        }
-    );
-
+  const resposta = await fetch(
+    "https://english-ai-tutor-i0tv.onrender.com/perguntar",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            conteudo
+        })
+    }
+);
     const dados = await resposta.json();
 
     if (!resposta.ok) {
