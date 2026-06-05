@@ -168,7 +168,7 @@ function renderizarConversas() {
                 return `<div class="mensagem tutor">${msg.text}</div>`;
 
             }).join("")
-            : `
+         
             <div class="mensagem tutor">
                 👋 Conversa carregada
             </div>
