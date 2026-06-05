@@ -186,8 +186,24 @@ window.addEventListener("DOMContentLoaded", () => {
     const chat = document.getElementById("chat");
 
     if (window.conversas[window.chatAtual]?.length > 0) {
+
         chat.innerHTML = window.conversas[window.chatAtual]
-            .map(item => item.html)
+            .map(msg => {
+
+                if (msg.role === "user") {
+                    return `<div class="mensagem usuario">${msg.text}</div>`;
+                }
+
+                return `<div class="mensagem tutor">${msg.text}</div>`;
+            })
             .join("");
+
+    } else {
+
+        chat.innerHTML = `
+            <div class="mensagem tutor">
+                👋 Nova conversa iniciada!
+            </div>
+        `;
     }
 });
