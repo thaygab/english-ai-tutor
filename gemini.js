@@ -63,7 +63,7 @@ Nível atual do aluno: ${nivel}
     ];
 
     const resposta = await fetch(
-        "http://localhost:3000/perguntar",
+        "https://english-ai-tutor-i0tv.onrender.com/perguntar",
         {
             method: "POST",
             headers: {
