@@ -10,20 +10,31 @@ async function perguntarIA(pergunta, nivel) {
         };
     });
 
-    // Monta o prompt do sistema combinado com a pergunta atual
+    // O SEU PROMPT EXATAMENTE COMO ESTAVA ANTES:
     const conteudo = [
         {
             role: "user",
             parts: [{
-                text: `Você é um tutor de inglês para brasileiros.\n\nRegras:\n- Responda em português\n- Seja didático e amigável\n- Inclua pronúncia\n\nNível atual do aluno: ${nivel}`
+                text: `
+Você é um tutor de inglês para brasileiros.
+
+Regras:
+- Responda em português
+- Seja didático e amigável
+- Inclua pronúncia
+
+Nível: ${nivel}
+`
             }]
         },
-        ...historicoFormatado,
-        {
-            role: "user",
-            parts: [{ text: `Nível: ${nivel}\nPergunta: ${pergunta}` }]
-        }
+        ...historicoFormatado
     ];
+
+    // Adiciona a pergunta atual ao final do histórico antes de enviar
+    conteudo.push({
+        role: "user",
+        parts: [{ text: `Nível: ${nivel}\nPergunta: ${pergunta}` }]
+    });
 
     const resposta = await fetch(
         "https://english-ai-tutor-i0tv.onrender.com/perguntar",
