@@ -1,3 +1,10 @@
+window.conversas = JSON.parse(localStorage.getItem("conversas")) || {};
+window.chatAtual = "default";
+
+if (!window.conversas["default"]) {
+    window.conversas["default"] = [];
+}
+
 let carregando = false;
 
 async function enviarPergunta() {
