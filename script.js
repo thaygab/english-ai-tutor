@@ -76,11 +76,15 @@ async function enviarPergunta() {
 }
 
 window.limparConversa = function () {
+
+    console.log("clicou em limpar");
+
     window.historico = [];
     localStorage.removeItem("historico");
     localStorage.removeItem("chatHTML");
 
     const chat = document.getElementById("chat");
+
     if (chat) {
         chat.innerHTML = `
             <div class="mensagem tutor">
@@ -89,6 +93,7 @@ window.limparConversa = function () {
         `;
     }
 };
+
 window.addEventListener("DOMContentLoaded", () => {
 
     const chat = document.getElementById("chat");
