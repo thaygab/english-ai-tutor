@@ -151,28 +151,29 @@ function renderizarConversas() {
         btn.style.margin = "5px 0";
         btn.style.width = "100%";
 
-        btn.onclick = () => {
+ btn.onclick = () => {
 
-            window.chatAtual = id;
+    window.chatAtual = id;
 
-            const chat = document.getElementById("chat");
+    const chat = document.getElementById("chat");
 
-           chat.innerHTML = window.conversas[id].map(msg => {
+    chat.innerHTML =
+        window.conversas[id].length > 0
+            ? window.conversas[id].map(msg => {
 
-    if (msg.role === "user") {
-        return `<div class="mensagem usuario">${msg.text}</div>`;
-    }
+                if (msg.role === "user") {
+                    return `<div class="mensagem usuario">${msg.text}</div>`;
+                }
 
-    return `<div class="mensagem tutor">${msg.text}</div>`;
+                return `<div class="mensagem tutor">${msg.text}</div>`;
 
-}).join("");
-:`
-               
-                <div class="mensagem tutor">
-                    👋 Conversa carregada
-                </div>
+            }).join("")
+            : `
+            <div class="mensagem tutor">
+                👋 Conversa carregada
+            </div>
             `;
-        };
+};
 
         lista.appendChild(btn);
     });
