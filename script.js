@@ -62,12 +62,15 @@ async function enviarPergunta() {
                 ${respostaFormatada.replace(/\n/g, "<br>")}
             </div>
         `;
+window.conversas[window.chatAtual].push({
+    role: "user",
+    text: pergunta
+});
 
-        window.conversas[window.chatAtual].push({
-            role: "ui",
-            html: chat.innerHTML
-        });
-
+window.conversas[window.chatAtual].push({
+    role: "assistant",
+    text: respostaFormatada
+});
         localStorage.setItem("conversas", JSON.stringify(window.conversas));
 
     } catch (erro) {
