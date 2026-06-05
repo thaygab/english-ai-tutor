@@ -62,7 +62,15 @@ async function enviarPergunta() {
             </div>
         `;
 
-        localStorage.setItem("chatHTML", chat.innerHTML);
+      window.conversas[window.chatAtual].push({
+    role: "ui",
+    html: chat.innerHTML
+});
+
+localStorage.setItem(
+    "conversas",
+    JSON.stringify(window.conversas)
+);
 
     } catch (erro) {
 
@@ -139,3 +147,39 @@ window.addEventListener("DOMContentLoaded", () => {
         chat.innerHTML = chatSalvo;
     }
 });
+
+function renderizarConversas() {
+
+    const lista = document.getElementById("listaConversas");
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    Object.keys(window.conversas).forEach((id) => {
+
+        const btn = document.createElement("button");
+
+        btn.innerText = id === "default"
+            ? "Conversa inicial"
+            : id.replace("chat_", "Conversa ");
+
+        btn.style.display = "block";
+        btn.style.margin = "5px 0";
+        btn.style.width = "100%";
+
+        btn.onclick = () => {
+
+            window.chatAtual = id;
+
+            const chat = document.getElementById("chat");
+
+            chat.innerHTML = localStorage.getItem("chat_" + id) || `
+                <div class="mensagem tutor">
+                    👋 Conversa carregada
+                </div>
+            `;
+        };
+
+        lista.appendChild(btn);
+    });
+}
