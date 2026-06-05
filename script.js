@@ -41,7 +41,7 @@ async function enviarPergunta() {
     chat.scrollTop = chat.scrollHeight;
 
     try {
-
+            
         const respostaIA = await perguntarIA(pergunta, nivel);
 
         const respostaFormatada = respostaIA
@@ -99,6 +99,25 @@ window.limparConversa = function () {
             </div>
         `;
     }
+};
+
+window.novaConversa = function () {
+
+    const id = "chat_" + Date.now();
+
+    window.conversas[id] = [];
+
+    window.chatAtual = id;
+
+    localStorage.setItem("conversas", JSON.stringify(window.conversas));
+
+    const chat = document.getElementById("chat");
+
+    chat.innerHTML = `
+        <div class="mensagem tutor">
+            👋 Nova conversa criada!
+        </div>
+    `;
 };
 
 window.addEventListener("DOMContentLoaded", () => {
