@@ -1,5 +1,5 @@
 window.conversas = JSON.parse(localStorage.getItem("conversas")) || {};
-window.chatAtual = "default";
+window.chatAtual = localStorage.getItem("chatAtual") || "default";
 
 if (!window.conversas["default"]) {
     window.conversas["default"] = [];
@@ -10,7 +10,7 @@ let carregando = false;
 // 🔵 ENVIAR PERGUNTA
 async function enviarPergunta() {
 
-    if (carregando) return;    
+    if (carregando) return;
     carregando = true;
 
     const nivel = document.getElementById("nivel").value;
@@ -62,16 +62,19 @@ async function enviarPergunta() {
                 ${respostaFormatada.replace(/\n/g, "<br>")}
             </div>
         `;
-window.conversas[window.chatAtual].push({
-    role: "user",
-    text: pergunta
-});
 
-window.conversas[window.chatAtual].push({
-    role: "assistant",
-    text: respostaFormatada
-});
+        window.conversas[window.chatAtual].push({
+            role: "user",
+            text: pergunta
+        });
+
+        window.conversas[window.chatAtual].push({
+            role: "assistant",
+            text: respostaFormatada
+        });
+
         localStorage.setItem("conversas", JSON.stringify(window.conversas));
+        localStorage.setItem("chatAtual", window.chatAtual);
 
     } catch (erro) {
 
@@ -117,10 +120,10 @@ window.novaConversa = function () {
     const id = "chat_" + Date.now();
 
     window.conversas[id] = [];
-
     window.chatAtual = id;
 
     localStorage.setItem("conversas", JSON.stringify(window.conversas));
+    localStorage.setItem("chatAtual", window.chatAtual);
 
     const chat = document.getElementById("chat");
 
@@ -151,29 +154,31 @@ function renderizarConversas() {
         btn.style.margin = "5px 0";
         btn.style.width = "100%";
 
- btn.onclick = () => {
+        btn.onclick = () => {
 
-    window.chatAtual = id;
+            window.chatAtual = id;
 
-    const chat = document.getElementById("chat");
+            localStorage.setItem("chatAtual", window.chatAtual);
 
-    chat.innerHTML =
-        window.conversas[id].length > 0
-            ? window.conversas[id].map(msg => {
+            const chat = document.getElementById("chat");
 
-                if (msg.role === "user") {
-                    return `<div class="mensagem usuario">${msg.text}</div>`;
-                }
+            chat.innerHTML =
+                window.conversas[id].length > 0
+                    ? window.conversas[id].map(msg => {
 
-                return `<div class="mensagem tutor">${msg.text}</div>`;
+                        if (msg.role === "user") {
+                            return `<div class="mensagem usuario">${msg.text}</div>`;
+                        }
 
-            }).join("")
-         
-            <div class="mensagem tutor">
-                👋 Conversa carregada
-            </div>
-            `;
-};
+                        return `<div class="mensagem tutor">${msg.text}</div>`;
+
+                    }).join("")
+                    : `
+                    <div class="mensagem tutor">
+                        👋 Conversa carregada
+                    </div>
+                    `;
+        };
 
         lista.appendChild(btn);
     });
