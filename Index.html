@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English AI Tutor</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+    <h1>English AI Tutor</h1>
+
+    <div id="chat" class="chat">
+
+        <div class="mensagem tutor">
+    Hello! 👋<br><br>
+
+    Sou seu tutor de inglês. 🇺🇸
+
+    <br><br>
+
+    Você pode:
+    <br>📚 Aprender vocabulário
+    <br>🗣️ Treinar pronúncia
+    <br>❓ Fazer perguntas
+    <br>✍️ Pedir exercícios
+    <br>🔄 Traduzir frases
+
+    <br><br>
+
+    Exemplos:
+    <br>• Quero aprender sobre animais
+    <br>• Como se diz "bom dia" em inglês?
+    <br>• Me ensine verbos no passado
+    <br>• Quero praticar conversação
+</div>
+
+    </div>
+
+    <div class="input-area">
+<select id="nivel">
+    <option value="Iniciante">🟢 Iniciante</option>
+    <option value="Intermediário">🟡 Intermediário</option>
+    <option value="Avançado">🔴 Avançado</option>
+</select>
+        <textarea
+            id="prompt"
+            placeholder="Digite um tema..."
+        ></textarea>
+
+        <button id="btnEnviar" onclick="enviarPergunta()">
+            Enviar
+        </button>
+
+       <button id="novaConversa">
+       🔄 Nova Conversa
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="gemini.js"></script>
+<script src="script.js"></script>
+
+    
+
+</body>
+</html>
