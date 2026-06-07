@@ -101,10 +101,6 @@ Nível: ${nivel}
 // FIM DA FUNÇÃO: perguntarIA
 // ============================================================================
 
-// ... o resto do seu código (função perguntarIA) fica aqui em cima
-
-// <-- } Este é o fechamento da sua função perguntarIA
-
 
 // ============================================================================
 // FLUXOGRAMA DE EXECUÇÃO DA FUNÇÃO: perguntarIA
