@@ -1,71 +1,153 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
+    <!-- ========================================================================= -->
+    <!-- CONFIGURAÇÕES DA PÁGINA                                                   -->
+    <!-- ========================================================================= -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>English AI Tutor</title>
 
+    <!-- Arquivo de estilos -->
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
+
+    <!-- ========================================================================= -->
+    <!-- CONTAINER PRINCIPAL                                                       -->
+    <!-- ========================================================================= -->
 
     <div class="container">
 
-    <h1>English AI Tutor</h1>
+        <!-- ========================================================================= -->
+        <!-- TÍTULO DO SISTEMA                                                        -->
+        <!-- ========================================================================= -->
 
-    <div id="chat" class="chat">
+        <h1>English AI Tutor</h1>
 
-        <div class="mensagem tutor">
-    Hello! 👋<br><br>
+        <!-- ========================================================================= -->
+        <!-- ÁREA DE CHAT                                                             -->
+        <!-- Onde as mensagens da IA e do usuário são exibidas                       -->
+        <!-- ========================================================================= -->
 
-    Sou seu tutor de inglês.
+        <div id="chat" class="chat">
 
-    <br><br>
+            <!-- Mensagem inicial do tutor -->
+            <div class="mensagem tutor">
 
-    Você pode:
-    <br>📚 Aprender vocabulário
-    <br>🗣️ Treinar pronúncia
-    <br>❓ Fazer perguntas
-    <br>✍️ Pedir exercícios
-    <br>🔄 Traduzir frases
+                Hello! 👋
 
-    <br><br>
+                <br><br>
 
-    Exemplos:
-    <br>• Quero aprender sobre animais
-    <br>• Como se diz "bom dia" em inglês?
-    <br>• Me ensine verbos no passado
-    <br>• Quero praticar conversação
-</div>
+                Sou seu tutor de inglês.
+
+                <br><br>
+
+                Você pode:
+
+                <br>📚 Aprender vocabulário
+                <br>🗣️ Treinar pronúncia
+                <br>❓ Fazer perguntas
+                <br>✍️ Pedir exercícios
+                <br>🔄 Traduzir frases
+
+                <br><br>
+
+                Exemplos:
+
+                <br>• Quero aprender sobre animais
+                <br>• Como se diz "bom dia" em inglês?
+                <br>• Me ensine verbos no passado
+                <br>• Quero praticar conversação
+
+            </div>
+
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- ÁREA DE ENVIO DE MENSAGENS                                               -->
+        <!-- ========================================================================= -->
+
+        <div class="input-area">
+
+            <!-- Seleção de nível do aluno -->
+            <select id="nivel">
+
+                <option value="Iniciante">
+                    🟢 Iniciante
+                </option>
+
+                <option value="Intermediário">
+                    🟡 Intermediário
+                </option>
+
+                <option value="Avançado">
+                    🔴 Avançado
+                </option>
+
+            </select>
+
+            <!-- Campo de texto -->
+            <textarea
+                id="prompt"
+                placeholder="Digite um tema...">
+            </textarea>
+
+            <!-- Botão enviar -->
+            <button
+                id="btnEnviar"
+                onclick="enviarPergunta()">
+                Enviar
+            </button>
+
+            <!-- Nova conversa -->
+            <button
+                id="novaConversa"
+                onclick="novaConversa()">
+                🔄 Nova Conversa
+            </button>
+
+            <!-- Limpar conversa -->
+            <button
+                onclick="limparConversa()">
+                Limpar conversa
+            </button>
+
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SIDEBAR DE CONVERSAS                                                     -->
+        <!-- Lista dos chats salvos                                                   -->
+        <!-- ========================================================================= -->
+
+        <div id="sidebar">
+
+            <button onclick="novaConversa()">
+                + Nova conversa
+            </button>
+
+            <div id="listaConversas"></div>
+
+        </div>
 
     </div>
 
- <div class="input-area">
-    <select id="nivel">
-        <option value="Iniciante">🟢 Iniciante</option>
-        <option value="Intermediário">🟡 Intermediário</option>
-        <option value="Avançado">🔴 Avançado</option>
-    </select>
-    <textarea id="prompt" placeholder="Digite um tema..."></textarea>
+    <!-- ========================================================================= -->
+    <!-- SCRIPTS                                                                    -->
+    <!-- ========================================================================= -->
 
-    <button id="btnEnviar" onclick="enviarPergunta()">Enviar</button>
-    <button id="novaConversa" onclick="novaConversa()">🔄 Nova Conversa</button>
-    <button onclick="limparConversa()">Limpar conversa</button>
-</div>
-        
-        <div id="sidebar">
-    <button onclick="novaConversa()">+ Nova conversa</button>
-    <div id="listaConversas"></div>
-    
-</div>
+    <!-- Comunicação com IA -->
+    <script src="gemini.js"></script>
 
-</div>
-
-
-<script src="gemini.js"></script>
-<script src="script.js"></script>
-
-    
+    <!-- Interface e lógica do sistema -->
+    <script src="script.js"></script>
 
 </body>
+
 </html>
