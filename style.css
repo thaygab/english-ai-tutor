@@ -1,123 +1,233 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ==========================================================================
+   RESET GLOBAL
+   Remove margens e paddings padrão do navegador
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    background:#0f172a;
-    color:white;
-    font-family:Arial, sans-serif;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+/* ==========================================================================
+   BODY
+   Configurações gerais da página
+   ========================================================================== */
 
-    min-height:100vh;
+body {
 
-    padding:20px;
+    background: #0f172a;
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+
+    padding: 20px;
 }
 
-.container{
-    width:100%;
-    max-width:1000px;
+
+/* ==========================================================================
+   CONTAINER PRINCIPAL
+   Área que envolve todo o sistema
+   ========================================================================== */
+
+.container {
+
+    width: 100%;
+    max-width: 1000px;
 }
 
-h1{
-    text-align:center;
-    margin-bottom:10px;
+
+/* ==========================================================================
+   TÍTULOS
+   ========================================================================== */
+
+h1 {
+
+    text-align: center;
+
+    margin-bottom: 10px;
 }
 
-.subtitulo{
-    text-align:center;
-    margin-bottom:20px;
-    opacity:0.8;
+.subtitulo {
+
+    text-align: center;
+
+    margin-bottom: 20px;
+
+    opacity: 0.8;
 }
 
-.chat{
-    background:#1e293b;
 
-    height:400px;
+/* ==========================================================================
+   ÁREA DE CHAT
+   ========================================================================== */
 
-    overflow-y:auto;
+.chat {
 
-    padding:20px;
+    background: #1e293b;
 
-    border-radius:15px;
+    height: 400px;
 
-    margin-bottom:15px;
+    overflow-y: auto;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    margin-bottom: 15px;
 }
 
-.mensagem{
-    max-width:80%;
 
-    padding:12px;
+/* ==========================================================================
+   MENSAGENS
+   Estilo base de todas as mensagens
+   ========================================================================== */
 
-    margin-bottom:15px;
+.mensagem {
 
-    border-radius:12px;
+    max-width: 80%;
 
-    line-height:1.6;
+    padding: 12px;
+
+    margin-bottom: 15px;
+
+    border-radius: 12px;
+
+    line-height: 1.6;
 }
 
-.usuario{
-    background:#2563eb;
 
-    margin-left:auto;
+/* ==========================================================================
+   MENSAGEM DO USUÁRIO
+   ========================================================================== */
+
+.usuario {
+
+    background: #2563eb;
+
+    margin-left: auto;
 }
 
-.tutor{
-    background:#334155;
+
+/* ==========================================================================
+   MENSAGEM DO TUTOR
+   ========================================================================== */
+
+.tutor {
+
+    background: #334155;
 }
 
-.input-area{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+
+/* ==========================================================================
+   ÁREA DE ENTRADA
+   Campo de texto e botões
+   ========================================================================== */
+
+.input-area {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
 }
 
-textarea{
-    width:100%;
 
-    height:80px;
+/* ==========================================================================
+   CAMPO DE TEXTO
+   ========================================================================== */
 
-    padding:15px;
+textarea {
 
-    border:none;
+    width: 100%;
 
-    border-radius:10px;
+    height: 80px;
 
-    resize:none;
+    padding: 15px;
 
-    font-size:16px;
+    border: none;
+
+    border-radius: 10px;
+
+    resize: none;
+
+    font-size: 16px;
 }
 
-button{
-     background:#2563eb;
-    color:white;
 
-    padding:15px;
+/* ==========================================================================
+   BOTÕES
+   ========================================================================== */
 
-    border:none;
+button {
 
-    border-radius:10px;
+    background: #2563eb;
+    color: white;
 
-    cursor:pointer;
+    padding: 15px;
 
-    font-size:16px;
+    border: none;
 
-    font-weight:bold;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: bold;
 }
 
-button:hover{
-    opacity:0.9;
+
+/* ==========================================================================
+   EFEITO HOVER DOS BOTÕES
+   ========================================================================== */
+
+button:hover {
+
+    opacity: 0.9;
 }
 
-ul{
-    margin-top:10px;
-    margin-left:20px;
+
+/* ==========================================================================
+   LISTAS
+   ========================================================================== */
+
+ul {
+
+    margin-top: 10px;
+    margin-left: 20px;
 }
 
-li{
-    margin-bottom:5px;
+li {
+
+    margin-bottom: 5px;
 }
+
+
+/* ==========================================================================
+   ESTRUTURA VISUAL DO SISTEMA
+   ==========================================================================
+
+   body
+      │
+      ▼
+   .container
+      │
+      ├── h1
+      │
+      ├── .chat
+      │      ├── .mensagem.usuario
+      │      └── .mensagem.tutor
+      │
+      └── .input-area
+             ├── textarea
+             └── button
+
+   ========================================================================== */
