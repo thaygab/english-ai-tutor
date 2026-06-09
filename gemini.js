@@ -74,7 +74,7 @@ Nível: ${nivel}
     // --- BLOCO 5: COMUNICAÇÃO COM O SERVIDOR (API HTTP POST) ---
     // Faz a requisição web enviando todos os dados estruturados em formato JSON
     const resposta = await fetch(
-        "https://english-ai-tutor-i0tv.onrender.com",
+        "https://english-ai-tutor-i0tv.onrender.com/perguntar",
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
