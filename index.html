@@ -12,6 +12,27 @@
 
     <title>English AI Tutor</title>
 
+        <!-- ========================================================================= -->
+        <!-- PERFIL DO USUÁRIO                                                         -->
+        <!-- Ícone no canto superior com nome do aluno e botão de sair                 -->
+        <!-- ========================================================================= -->
+
+        <div class="perfil-usuario">
+
+            <div class="perfil-info">
+                <div class="perfil-icone">
+                    👤
+                </div>
+
+                <span id="boasVindas"></span>
+            </div>
+
+            <button onclick="sair()">
+                Sair
+            </button>
+
+        </div>
+
     <!-- Arquivo de estilos -->
     <link rel="stylesheet" href="style.css">
 
@@ -19,11 +40,41 @@
 
 <body>
 
+        <!-- ========================================================================= -->
+    <!-- TELA DE LOGIN                                                             -->
+    <!-- Esta área aparece antes do aluno acessar o tutor                          -->
+    <!-- ========================================================================= -->
+
+    <div id="loginScreen" class="login-screen">
+
+        <div class="login-box">
+
+            <h1>English AI Tutor</h1>
+
+            <p class="subtitulo">
+                Entre para continuar seus estudos
+            </p>
+
+            <!-- Campo para o nome do aluno -->
+            <input
+                id="nomeAluno"
+                type="text"
+                placeholder="Digite seu nome">
+
+            <!-- Botão que chama a função de login no JavaScript -->
+            <button onclick="fazerLogin()">
+                Entrar
+            </button>
+
+        </div>
+
+    </div>
+
     <!-- ========================================================================= -->
     <!-- CONTAINER PRINCIPAL                                                       -->
     <!-- ========================================================================= -->
 
-    <div class="container">
+        <div id="app" class="container oculto">
 
         <!-- ========================================================================= -->
         <!-- TÍTULO DO SISTEMA                                                        -->

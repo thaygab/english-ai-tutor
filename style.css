@@ -231,3 +231,115 @@ li {
              └── button
 
    ========================================================================== */
+
+/* ==========================================================================
+   TELA DE LOGIN
+   Ocupa a tela inteira e centraliza a caixa de entrada
+   ========================================================================== */
+
+.login-screen {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ==========================================================================
+   CAIXA DO LOGIN
+   É o bloco visual onde ficam título, texto, campo e botão
+   ========================================================================== */
+
+.login-box {
+    width: 100%;
+    max-width: 380px;
+
+    background: #1e293b;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   CAMPO DO LOGIN
+   Estiliza o input onde o aluno digita o nome
+   ========================================================================== */
+
+.login-box input {
+    width: 100%;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+}
+
+
+/* ==========================================================================
+   PERFIL DO USUÁRIO
+   Fica no canto superior da tela do chat
+   ========================================================================== */
+
+.perfil-usuario {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+}
+
+
+/* ==========================================================================
+   INFORMAÇÕES DO PERFIL
+   Agrupa ícone e nome do aluno
+   ========================================================================== */
+
+.perfil-info {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* ==========================================================================
+   ÍCONE DO PERFIL
+   Representa visualmente o usuário logado
+   ========================================================================== */
+
+.perfil-icone {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #1e293b;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+}
+
+/* ==========================================================================
+   CLASSE AUXILIAR: OCULTO
+   Precisa ficar no final para conseguir esconder qualquer tela
+   ========================================================================== */
+
+.oculto {
+    display: none;
+}

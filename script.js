@@ -18,6 +18,84 @@ if (!window.conversas[window.chatAtual]) {
 // Controla requisições simultâneas
 let carregando = false;
 
+// ============================================================================
+// CONTROLE DE LOGIN
+// ============================================================================
+
+/*
+|--------------------------------------------------------------------------
+| FUNÇÃO: mostrarApp()
+|--------------------------------------------------------------------------
+|
+| Objetivo:
+| Esconder a tela de login e mostrar o tutor.
+|
+| Aqui usamos a classe "oculto" criada no CSS.
+|
+*/
+function mostrarApp(nomeAluno) {
+
+    const loginScreen = document.getElementById("loginScreen");
+    const app = document.getElementById("app");
+    const boasVindas = document.getElementById("boasVindas");
+
+    loginScreen.classList.add("oculto");
+    app.classList.remove("oculto");
+
+    boasVindas.innerText = "Olá, " + nomeAluno + "!";
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FUNÇÃO: fazerLogin()
+|--------------------------------------------------------------------------
+|
+| Objetivo:
+| Ler o nome digitado, validar se não está vazio
+| e salvar esse nome no navegador.
+|
+*/
+function fazerLogin() {
+
+    const inputNome = document.getElementById("nomeAluno");
+
+    const nomeAluno = inputNome.value.trim();
+
+    if (!nomeAluno) {
+        alert("Digite seu nome para entrar.");
+        return;
+    }
+
+    localStorage.setItem("nomeAluno", nomeAluno);
+
+    mostrarApp(nomeAluno);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FUNÇÃO: sair()
+|--------------------------------------------------------------------------
+|
+| Objetivo:
+| Remover o aluno salvo e voltar para a tela de login.
+|
+*/
+function sair() {
+
+    localStorage.removeItem("nomeAluno");
+
+    const loginScreen = document.getElementById("loginScreen");
+    const app = document.getElementById("app");
+    const inputNome = document.getElementById("nomeAluno");
+
+    app.classList.add("oculto");
+    loginScreen.classList.remove("oculto");
+
+    inputNome.value = "";
+}
+
 
 // ============================================================================
 // FUNÇÕES AUXILIARES
@@ -384,6 +462,14 @@ function renderizarConversas() {
 |
 */
 window.addEventListener("DOMContentLoaded", () => {
+
+        // Verifica se já existe um aluno salvo no navegador
+    const nomeAlunoSalvo = localStorage.getItem("nomeAluno");
+
+    // Se existir, mostra o app direto, sem pedir login de novo
+    if (nomeAlunoSalvo) {
+        mostrarApp(nomeAlunoSalvo);
+    }
 
     renderizarConversas();
 
